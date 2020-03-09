@@ -103,28 +103,28 @@ export const Layout = (props: PropsType) => {
             key: "new",
             text: "New Report",
             icon: (<AddCircleOutline/>),
-            to: "home"
+            to: "/reports/new"
         },
         {
             order: 0,
             key: "list",
             text: "Reports",
             icon: (<ListIcon/>),
-            to: "reports"
+            to: "/reports"
         },
         {
             order: 0,
             key: "search",
             text: "Search",
             icon: (<SearchIcon/>),
-            to: "search"
+            to: "/search"
         },
         {
             order: 0,
             key: "dashboard",
             text: "Dashboard",
             icon: (<DashboardIcon/>),
-            to: "home"
+            to: "/home"
         }
     ];
     const userMenu = [

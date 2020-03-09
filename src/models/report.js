@@ -1,5 +1,7 @@
 // @flow
 import { isValidDate } from "../libs/validators";
+import ReportVehicle from "./report-vehicle";
+import ReportSubject from "./report-subject";
 
 export default class Report {
     created: ?Date;
@@ -32,9 +34,11 @@ export default class Report {
         this.updated = isValidDate(new Date(args.updated))
             ? new Date(args.updated)
             : null;
+        this.vehicle = args.vehicle ? ReportVehicle.create(args.vehicle) : null;
+        this.subject = args.subject ? ReportSubject.create(args.subject) : null;
     }
 
-    static create(args: ?Object, id?: string): User {
+    static create(args: ?Object, id?: string): Report {
         const _args = args || {};
         if (Boolean(id)) {
             _args.id = id;

@@ -1,6 +1,7 @@
 import React from "react";
 import HomeScreen from "./components/home-screen";
 import ReportDetailsScreen from "./components/report-details-screen";
+import NewReportScreen from "./components/new-report-screen";
 import ReportsScreen from "./components/reports-screen";
 import SearchScreen from "./components/search-screen";
 import { Provider } from "react-redux";
@@ -27,11 +28,14 @@ function App() {
                         <Layout>
                             <div className="App">
                                 <Switch>
-                                    <Route path="/reports">
-                                        <ReportsScreen/>
+                                    <Route path="/reports/new" exact={ true }>
+                                        <NewReportScreen/>
                                     </Route>
-                                    <Route path="/report-details">
+                                    <Route path="/reports/:id" exact={ true }>
                                         <ReportDetailsScreen/>
+                                    </Route>
+                                    <Route path="/reports" exact={ true }>
+                                        <ReportsScreen/>
                                     </Route>
                                     <Route path="/search">
                                         <SearchScreen/>

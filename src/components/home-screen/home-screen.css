@@ -1,3 +1,24 @@
 .home {
 
 }
+
+.home_tile-image {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.home_tile-title {
+    font-size: 1.4rem;
+    color: #AAA;
+    margin: 1rem auto 0 auto;
+    text-align: center;
+}
+
+.home_tile-container {
+    cursor: pointer;
+    background-color: #F4F4F4;
+    margin: 0.2rem;
+    padding: 1rem 0;
+    border-radius: 0.2rem;
+    box-shadow: 0px 8px 8px -8px #AAA;
+}

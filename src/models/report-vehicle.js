@@ -18,6 +18,18 @@ export default class ReportVehicle {
         this.id = typeof args.id === "string"
             ? args.id
             : null;
+        this.vehicleMake = typeof args.vehicleMake === "string"
+            ? args.vehicleMake
+            : null;
+        this.vehicleModel = typeof args.vehicleModel === "string"
+            ? args.model
+            : null;
+        this.vehicleYear = typeof args.vehicleYear === "string"
+            ? args.vehicleYear
+            : null;
+        this.vehicleColor = typeof args.vehicleColor === "string"
+            ? args.vehicleColor
+            : null;
         this.plateNumber = typeof args.plateNumber === "string"
             ? args.plateNumber
             : null;
