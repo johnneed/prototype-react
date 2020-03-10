@@ -37,8 +37,8 @@ export default class Report {
         this.updated = isValidDate(new Date(args.updated))
             ? new Date(args.updated)
             : null;
-        this.vehicle = args.vehicle ? ReportVehicle.create(args.vehicle) : null;
-        this.subject = args.subject ? ReportSubject.create(args.subject) : null;
+        this.vehicle = ReportVehicle.create(args.vehicle);
+        this.subject = ReportSubject.create(args.subject);
         this.details = args.details || "";
     }
 

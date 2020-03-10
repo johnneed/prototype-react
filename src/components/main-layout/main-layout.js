@@ -23,6 +23,13 @@ import SearchIcon from "@material-ui/icons/Search";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ListItemLink from "../list-item-link";
+import type Report from "../../models/report";
+import type User from "../../models/user";
+import { bindActionCreators } from "redux";
+import * as reportActions from "../../action-creators/report-action-creators";
+import { useHistory } from "react-router-dom";
+import uuid from "uuid";
+import { connect } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -83,8 +90,8 @@ const useStyles = makeStyles(theme => ({
 }));
 type PropsType = { children: React$Component<any> };
 
-export const Layout = (props: PropsType) => {
-    const { children } = props;
+const Layout = ( { children, actions }: PropsType) => {
+    const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -98,13 +105,7 @@ export const Layout = (props: PropsType) => {
     };
 
     const reportsMenu = [
-        {
-            order: 0,
-            key: "new",
-            text: "New Report",
-            icon: (<AddCircleOutline/>),
-            to: "/reports/new"
-        },
+
         {
             order: 0,
             key: "list",
@@ -173,6 +174,16 @@ export const Layout = (props: PropsType) => {
                 </div>
                 <Divider/>
                 <List>
+                    <li>
+                    <ListItem button onClick={ () => {
+                        const rid = uuid();
+                        actions.createReport({}, rid);
+                        window.setTimeout(()=> history.push(`reports/${rid}`), 250)
+                    } }>
+                        <ListItemIcon><AddCircleOutline/></ListItemIcon>
+                        <ListItemText primary={ "New Report" }/>
+                    </ListItem>
+                </li>
                     { reportsMenu.map((item) => (
                         <ListItemLink key={ item.key } { ...item } />
                     )) }
@@ -198,3 +209,15 @@ export const Layout = (props: PropsType) => {
         </div>
     );
 };
+
+
+const mapStateToProps = (state: Object): Object => {
+    const user: User = state.session.user;
+    return ({ user });
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<Object>): Object => ({
+    actions: bindActionCreators(reportActions, dispatch)
+});
+
+export const MainLayout = connect(mapStateToProps, mapDispatchToProps)(Layout);

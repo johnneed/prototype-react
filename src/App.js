@@ -13,7 +13,7 @@ import {
     Switch,
     Route
 } from "react-router-dom";
-import Layout from "./components/layout";
+import Layout from "./components/main-layout";
 import Session from "./components/session";
 
 const { persistor, store } = configureStore(); // Using a persisted store

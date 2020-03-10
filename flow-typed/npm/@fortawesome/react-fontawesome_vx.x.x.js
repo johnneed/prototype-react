@@ -15,9 +15,7 @@
 
 declare module '@fortawesome/react-fontawesome' {
   declare module.exports: any;
-
-    export class FontAwesomeIcon {
-    }
+  export class FontAwesomeIcon {}
 }
 
 /**
