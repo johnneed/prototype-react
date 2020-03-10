@@ -31,9 +31,10 @@ function App() {
                                     <Route path="/reports/new" exact={ true }>
                                         <NewReportScreen/>
                                     </Route>
-                                    <Route path="/reports/:id" exact={ true }>
-                                        <ReportDetailsScreen/>
-                                    </Route>
+                                    <Route path="/reports/:id" exact={ true }
+                                           render={
+                                               ({ match }) =>(<ReportDetailsScreen match={ match }/>)
+                                           }/>
                                     <Route path="/reports" exact={ true }>
                                         <ReportsScreen/>
                                     </Route>
@@ -50,7 +51,8 @@ function App() {
                 </Session>
             </PersistGate>
         </Provider>
-    );
+    )
+        ;
 
 }
 

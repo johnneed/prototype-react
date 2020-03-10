@@ -11,14 +11,17 @@ export default class Report {
     type: ?string;
     pin: ?string;
     updated: ?Date;
+    vehicle: ReportVehicle;
+    subject: ReportSubject;
+    details: ?string;
 
     constructor(args: Object = {}) {
         this.created = isValidDate(args.created)
             ? new Date(args.created)
             : new Date();
-        this.dateTime = isValidDate(args.dateTime)
-            ? new Date(args.dateTime)
-            : null;
+        this.dateTime = Boolean(args.dateTime)
+            ? args.dateTime
+            : new Date();
         this.id = typeof args.id === "string"
             ? args.id
             : null;
@@ -36,6 +39,7 @@ export default class Report {
             : null;
         this.vehicle = args.vehicle ? ReportVehicle.create(args.vehicle) : null;
         this.subject = args.subject ? ReportSubject.create(args.subject) : null;
+        this.details = args.details || "";
     }
 
     static create(args: ?Object, id?: string): Report {

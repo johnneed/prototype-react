@@ -12,6 +12,7 @@ export default class ReportSubject {
     phoneNumber: ?string;
     address: ?Address;
     updated: ?Date;
+    gender: ?string;
 
     constructor(args: Object = {}) {
         this.created = isValidDate(args.created)
@@ -27,10 +28,13 @@ export default class ReportSubject {
         this.lastName = typeof args.lastName === "string"
             ? args.lastName
             : null;
-        this.phoneNumber = formatPhoneNumber(args.phoneNumber);
+        this.phoneNumber = args.phoneNumber;
         this.address = Address.create(args.address || {});
         this.updated = isValidDate(new Date(args.updated))
             ? new Date(args.updated)
+            : null;
+        this.gender = typeof args.gender === "string"
+            ? args.gender
             : null;
     }
 

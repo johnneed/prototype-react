@@ -23,6 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandPaper, faArrowAltCircleLeft, faCarCrash } from "@fortawesome/free-solid-svg-icons";
 import * as R from "ramda";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 import type Report from "../../models/report";
 import type User from "../../models/user";
@@ -60,6 +61,7 @@ const getIcon = R.cond([
 
 const Screen = ({ actions, reports, selectedReport }): React$Element<any> => {
     const classes = useStyles();
+    const history = useHistory();
     const [dense, setDense] = useState(false);
     const [secondary, setSecondary] = useState(true);
 
@@ -82,11 +84,13 @@ const Screen = ({ actions, reports, selectedReport }): React$Element<any> => {
                             </ListItemAvatar>
                             <ListItemText
                                 primary={ `${ moment(report.dateCreated).format("MM/DD/YYYY HH:MM") } ${ report.subject ? ` | ${ report.subject.firstName } ${ report.subject.lastName }` : "" }` }
-                                secondary={ report.vehicle ? `${ report.vehicle.vehicleColor || "" } ${ report.vehicle.vehicleYear || "" } ${ report.vehicle.vehicleMake|| "" } ${ report.vehicle.vehicleModel || "" } ${ report.vehicle.licensePlateState || "" }${ report.vehicle.licensePlateNumber || "" }` : null }
+                                secondary={ report.vehicle ? `${ report.vehicle.vehicleColor || "" } ${ report.vehicle.vehicleYear || "" } ${ report.vehicle.vehicleMake || "" } ${ report.vehicle.vehicleModel || "" } ${ report.vehicle.licensePlateState || "" }${ report.vehicle.licensePlateNumber || "" }` : null }
                             />
 
                             <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label="edit">
+                                <IconButton edge="end" aria-label="edit" onClick={ () => {
+                                    history.push(`/reports/${ report.id }`);
+                                } }>
                                     <EditIcon/>
                                 </IconButton>
                                 <IconButton edge="end" aria-label="delete">
@@ -96,20 +100,20 @@ const Screen = ({ actions, reports, selectedReport }): React$Element<any> => {
                         </ListItem>
                     )) }
                 </List>
-                < /div>
             </div>
-            );
-            };
+        </div>
+    );
+};
 
-            const mapStateToProps = (state: Object): Object => {
-            const reports = state.reports.data;
-            const selectedReport: Report = state.reports.data[state.reports.selected];
-            const user: User = state.session.user;
-            return ({ user, reports });
-        };
+const mapStateToProps = (state: Object): Object => {
+    const reports = state.reports.data;
+    const selectedReport: Report = state.reports.data[state.reports.selected];
+    const user: User = state.session.user;
+    return ({ user, reports });
+};
 
-            const mapDispatchToProps = (dispatch: Dispatch<Object>): Object => ({
-            actions: bindActionCreators(reportActions, dispatch)
-        });
+const mapDispatchToProps = (dispatch: Dispatch<Object>): Object => ({
+    actions: bindActionCreators(reportActions, dispatch)
+});
 
-            export const ReportsScreen = connect(mapStateToProps, mapDispatchToProps)(Screen);
+export const ReportsScreen = connect(mapStateToProps, mapDispatchToProps)(Screen);

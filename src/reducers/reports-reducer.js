@@ -47,7 +47,7 @@ export const reportsReducer = R.cond([
             return {
                 ...state,
                 data: {
-                    ...state.reports,
+                    ...state.data,
                     [action.payload.id]: myNewReport
                 },
 

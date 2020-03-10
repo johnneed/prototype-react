@@ -5,11 +5,14 @@ import Address from "./address";
 
 export default class ReportVehicle {
     created: ?Date;
-    plateNumber: ?string;
+    licensePlateNumber: ?string;
     id: ?string;
-    plateState: ?string;
-    plateCountry: ?string;
+    licensePlateState: ?string;
+    licensePlateCountry: ?string;
     updated: ?Date;
+    vehicleModel: ?string;
+    vehicleYear: ?string;
+    vehicleMake: ?string;
 
     constructor(args: Object = {}) {
         this.created = isValidDate(args.created)
@@ -22,7 +25,7 @@ export default class ReportVehicle {
             ? args.vehicleMake
             : null;
         this.vehicleModel = typeof args.vehicleModel === "string"
-            ? args.model
+            ? args.vehicleModel
             : null;
         this.vehicleYear = typeof args.vehicleYear === "string"
             ? args.vehicleYear
@@ -30,14 +33,14 @@ export default class ReportVehicle {
         this.vehicleColor = typeof args.vehicleColor === "string"
             ? args.vehicleColor
             : null;
-        this.plateNumber = typeof args.plateNumber === "string"
-            ? args.plateNumber
+        this.licensePlateNumber = typeof args.licensePlateNumber === "string"
+            ? args.licensePlateNumber
             : null;
-        this.plateState = typeof args.plateState === "string"
-            ? args.plateState
+        this.licensePlateState = typeof args.licensePlateState === "string"
+            ? args.licensePlateState
             : null;
-        this.plateCountry = typeof args.plateCountry === "string"
-            ? args.plateCountry
+        this.licensePlateCountry = typeof args.licensePlateCountry === "string"
+            ? args.licensePlateCountry
             : "USA";
         this.updated = isValidDate(new Date(args.updated))
             ? new Date(args.updated)
