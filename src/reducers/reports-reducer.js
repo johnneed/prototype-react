@@ -27,6 +27,20 @@ export const reportsReducer = R.cond([
         }
     ],
     [
+        (state, action) => (action.type === types.CREATE_REPORT_FROM_SEARCH_RESULT),
+        (state, action) => {
+            return ({
+                ...state,
+                selected: action.payload.id,
+                data: {
+                    ...state.data,
+                    [action.payload.id]: action.payload
+                },
+                error: null
+            });
+        }
+    ],
+    [
         (state, action) => (action.type === types.CREATE_REPORT),
         (state, action) => {
             return ({

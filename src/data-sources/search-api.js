@@ -1,9 +1,10 @@
-import {searchResults} from "./fake-reports";
+import { searchResults } from "./fake-reports";
 
 
 // Fake API Call
-export const search = () => new Promise((resolve, reject) => {
+export const search = (pin = "") => new Promise((resolve, reject) => {
     window.setTimeout(function () {
-        resolve(searchResults);  // Yay! Everything went well!
+        const results = searchResults.filter(result => result.pin.startsWith(pin.trim()));
+        resolve(results);  // Yay! Everything went well!
     }, 250);
 });

@@ -36,8 +36,8 @@ import * as R from "ramda";
 
  **/
 
-export const createReport = (roomId: string, reportData: Report): ActionType => {
-    const report = Report.create({ ...reportData, roomId });
+export const createReport = (reportId: string, reportData: Report): ActionType => {
+    const report = Report.create({ ...reportData, reportId });
     return ({
         type: actionTypes.CREATE_REPORT,
         payload: Report.create()

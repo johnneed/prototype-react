@@ -8,7 +8,7 @@ const firstRental = Rental.create();
 const initialState = {
     network: { isOffline: true },
     reports: { data: {}, error: null, selected: null },
-    searchResults: { data: {}, error: null, selected: null },
+    searchResults: { data: [], error: null, selected: null },
     session: {
         userIsLoggedIn: false,
         isInitialized: false,
