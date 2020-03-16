@@ -1,10 +1,12 @@
-import {reports} from "./fake-reports";
+import { reports } from "./fake-reports";
+import * as R from "ramda";
 
 // Fake API Call
-export const fetchReports = () => new Promise((resolve, reject) => {
+export const fetchReports = (query) => new Promise((resolve, reject) => {
     window.setTimeout(function () {
-        resolve(reports);  // Yay! Everything went well!
-    }, 3000);
+        const results = R.filter(report => query.pin && report.pin.startsWith(query.pin))(reports);
+        resolve(results);  // Yay! Everything went well!
+    }, 100);
 });
 
 

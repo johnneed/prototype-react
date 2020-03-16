@@ -1,9 +1,9 @@
 import React from "react";
-import HomeScreen from "./components/home-screen";
-import ReportDetailsScreen from "./components/report-details-screen";
-import NewReportScreen from "./components/new-report-screen";
-import ReportsScreen from "./components/reports-screen";
-import SearchScreen from "./components/search-screen";
+import HomeScreen from "./screens/home-screen";
+import ReportDetailsScreen from "./screens/report-details-screen";
+import NewReportScreen from "./screens/new-report-screen";
+import ReportsScreen from "./screens/reports-screen";
+import SearchScreen from "./screens/search-screen";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
 import Splash from "./components/splash";

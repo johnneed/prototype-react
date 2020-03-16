@@ -2,7 +2,7 @@
 
 import * as actionTypes from "../constants/action-types";
 import Report from "../models/report";
-import * as api from "../data-sources/search-api";
+import * as api from "../data-sources/search-api-1";
 
 
 /** EXAMPLE ACTIONS

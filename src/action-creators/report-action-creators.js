@@ -81,9 +81,9 @@ export const saveReport = (report): ThunkType => {
     return thunk;
 };
 
-export const fetchReports = (): ThunkType => {
+export const fetchReports = (searchTerm): ThunkType => {
     function thunk(dispatch: Dispatch<ActionType>) {
-        api.fetchReports()
+        api.fetchReports({pin:searchTerm})
             .then((response: mixed) => {
                 const reports = R.mapObjIndexed((report, id) => Report.create(report, id), response);
                 dispatch({ type: actionTypes.FETCH_REPORTS_SUCCESS, payload: { data: reports } });
