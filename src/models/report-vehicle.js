@@ -13,6 +13,7 @@ export default class ReportVehicle {
     vehicleModel: ?string;
     vehicleYear: ?string;
     vehicleMake: ?string;
+    vin: ?string;
 
     constructor(args: Object = {}) {
         this.created = isValidDate(args.created)
@@ -45,6 +46,9 @@ export default class ReportVehicle {
         this.updated = isValidDate(new Date(args.updated))
             ? new Date(args.updated)
             : null;
+        this.vin = typeof args.vin === "string"
+            ? args.vin
+            : null;
     }
 
     static create(args: ?Object, id?: string): ReportVehicle {
@@ -54,6 +58,4 @@ export default class ReportVehicle {
         }
         return JSON.parse(JSON.stringify(new ReportVehicle(_args)));
     }
-
-
 }

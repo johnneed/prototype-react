@@ -21,15 +21,17 @@ export const login = (username, password): ActionType => ({
 // TODO: move this to report-action-creators and call when needed.
 export const initialize = (): ThunkType => {
     function thunk(dispatch: Dispatch<ActionType>) {
-        api.fetchReports()
-            .then((response: mixed) => {
-                const reports = R.mapObjIndexed((report, id) => Report.create(report, id), response);
-                dispatch({ type: actionTypes.FETCH_REPORTS_SUCCESS, payload: { data: reports } });
-                dispatch({ type: actionTypes.INITIALIZE_SUCCESS });
-            })
-            .catch((error: Error) => {
-                dispatch({ type: actionTypes.FETCH_REPORTS_FAIL, payload: { error } });
-            });
+        // api.fetchReports()
+        //     .then((response: mixed) => {
+        //         const reports = R.mapObjIndexed((report, id) => Report.create(report, id), response);
+        //         dispatch({ type: actionTypes.FETCH_REPORTS_SUCCESS, payload: { data: reports } });
+        //         dispatch({ type: actionTypes.INITIALIZE_SUCCESS });
+        //     })
+        //     .catch((error: Error) => {
+        //         dispatch({ type: actionTypes.FETCH_REPORTS_FAIL, payload: { error } });
+        //     });
+
+        dispatch({ type: actionTypes.INITIALIZE_SUCCESS })
     }
 
     thunk.interceptOnOffline = false;

@@ -28,7 +28,7 @@ const Screen = ({ actions, searchResults }: PropsType) => {
 
     const search = event => {
         const newTerm = event.target.value;
-        actions.fetchReports(newTerm);
+        actions.fetchSearchResults(newTerm);
         setSearchTerm(newTerm);
     };
 

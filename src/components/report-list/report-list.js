@@ -24,8 +24,8 @@ export const ReportList = ({ reports, history, dense = false }: PropsType): Reac
                         />
                     </ListItemAvatar>
                     <ListItemText
-                        primary={ `${ moment(report.dateCreated).format("MM/DD/YYYY HH:MM") } ${ report.subject ? ` | ${ report.subject.firstName } ${ report.subject.lastName }` : "" }` }
-                        secondary={ report.vehicle ? `${ report.vehicle.vehicleColor || "" } ${ report.vehicle.vehicleYear || "" } ${ report.vehicle.vehicleMake || "" } ${ report.vehicle.vehicleModel || "" } ${ report.vehicle.licensePlateState || "" }${ report.vehicle.licensePlateNumber || "" }` : null }
+                        primary={ `${ report.pin || null } | ${ moment(report.dateCreated).format("MM/DD/YYYY HH:MM") }` }
+                        secondary={`${ report.subject.firstName } ${ report.subject.lastName } |  ${ report.vehicle.vehicleColor || "" } ${ report.vehicle.vehicleYear || "" } ${ report.vehicle.vehicleMake || "" } ${ report.vehicle.vehicleModel || "" } ${ report.vehicle.licensePlateState || "" }${ report.vehicle.licensePlateNumber || "" }`  }
                     />
 
                     <ListItemSecondaryAction>

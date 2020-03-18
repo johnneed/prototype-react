@@ -13,6 +13,9 @@ export default class ReportSubject {
     address: ?Address;
     updated: ?Date;
     gender: ?string;
+    driversLicenseNumber: ?string;
+    driversLicenseState: ?string;
+    driversLicenseExpiration: ?Date;
 
     constructor(args: Object = {}) {
         this.created = isValidDate(args.created)
@@ -36,6 +39,9 @@ export default class ReportSubject {
         this.gender = typeof args.gender === "string"
             ? args.gender
             : null;
+        this.created = isValidDate(args.created)
+            ? new Date(args.created)
+            : new Date();
     }
 
     static create(args: ?Object, id?: string): ReportSubject {

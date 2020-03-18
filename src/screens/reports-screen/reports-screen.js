@@ -45,7 +45,7 @@ const Screen = ({ actions, reports, selectedReport }): React$Element<any> => {
                 R.always(Boolean(searchTerm.trim())),
                 () => (
                     <Box className={ "reports_no-results-box" } component={ "p" } textAlign="center">
-                        Enter a PIN to find reports.
+                        No reports found.
                     </Box>
                 )
             ],

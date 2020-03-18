@@ -23,7 +23,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ListItemLink from "../list-item-link";
-import type Report from "../../models/report";
 import type User from "../../models/user";
 import { bindActionCreators } from "redux";
 import * as reportActions from "../../action-creators/report-action-creators";
@@ -43,7 +42,7 @@ const useStyles = makeStyles(theme => ({
             duration: theme.transitions.duration.leavingScreen
         })
     },
-    appBarShift: {
+    appBarShiftToRight: {
         width: `calc(100% - ${ drawerWidth }px)`,
         marginLeft: drawerWidth,
         transition: theme.transitions.create(["margin", "width"], {
@@ -51,6 +50,24 @@ const useStyles = makeStyles(theme => ({
             duration: theme.transitions.duration.enteringScreen
         })
     },
+    appBarShiftToLeft: {
+        width: `calc(100% - ${ drawerWidth }px)`,
+        marginRight: drawerWidth,
+        transition: theme.transitions.create(["margin", "width"], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen
+        })
+    },
+    appBarShiftToCenter: {
+        width: `calc(100% - ${ 2 * drawerWidth }px)`,
+        marginRight: drawerWidth,
+        marginLeft: drawerWidth,
+        transition: theme.transitions.create(["margin", "width"], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen
+        })
+    },
+
     menuButton: {
         marginRight: theme.spacing(2)
     },
@@ -71,6 +88,13 @@ const useStyles = makeStyles(theme => ({
         ...theme.mixins.toolbar,
         justifyContent: "flex-end"
     },
+    rightDrawerHeader: {
+        display: "flex",
+        alignItems: "center",
+        padding: theme.spacing(0, 1),
+        ...theme.mixins.toolbar,
+        justifyContent: "flex-start"
+    },
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
@@ -78,30 +102,49 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen
         }),
-        marginLeft: -drawerWidth
+        marginLeft: -2 * drawerWidth,
+        marginRight: 0
     },
-    contentShift: {
+    contentShiftToRight: {
         transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen
         }),
-        marginLeft: 0
+        marginLeft: -drawerWidth
+    },
+    contentShiftToLeft: {
+        transition: theme.transitions.create("margin", {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen
+        }),
+        marginRight: drawerWidth,
+    },
+    contentShiftToCenter: {
+        transition: theme.transitions.create("margin", {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen
+        }),
+        marginLeft: -drawerWidth,
+        marginRight: drawerWidth,
+    },
+    title: {
+        flexGrow: 1
     }
 }));
 type PropsType = { children: React$Component<any> };
 
-const Layout = ( { children, actions }: PropsType) => {
+const Layout = ({ children, actions }: PropsType) => {
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
-
-    const handleDrawerOpen = () => {
-        setOpen(true);
+    const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
+    const [isRightDrawerOpen, setIsRightDrawerOpen] = React.useState(true);
+    const toggleLeftDrawer = () => {
+        setIsLeftDrawerOpen(!isLeftDrawerOpen);
     };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
+    const toggleRightDrawer = () => {
+        setIsRightDrawerOpen(!isRightDrawerOpen);
     };
 
     const reportsMenu = [
@@ -140,50 +183,61 @@ const Layout = ( { children, actions }: PropsType) => {
             <AppBar
                 position="fixed"
                 className={ clsx(classes.appBar, {
-                    [classes.appBarShift]: open
+                    [classes.appBarShiftToRight]: isLeftDrawerOpen && !isRightDrawerOpen,
+                    [classes.appBarShiftToLeft]: !isLeftDrawerOpen && isRightDrawerOpen,
+                    [classes.appBarShiftToCenter]: isLeftDrawerOpen && isRightDrawerOpen
                 }) }
             >
                 <Toolbar>
                     <IconButton
                         color="inherit"
-                        aria-label="open drawer"
-                        onClick={ handleDrawerOpen }
+                        aria-label="open navigation"
+                        onClick={ toggleLeftDrawer }
                         edge="start"
-                        className={ clsx(classes.menuButton, open && classes.hide) }
+                        className={ clsx(classes.menuButton, isLeftDrawerOpen && classes.hide) }
                     >
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" noWrap>
+                    <Typography variant="h6" noWrap className={ classes.title }>
                         CALL CENTER
                     </Typography>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open search"
+                        onClick={ toggleRightDrawer }
+                        edge="end"
+                        className={ isRightDrawerOpen && classes.hide }
+                    >
+                        <SearchIcon/>
+                    </IconButton>
                 </Toolbar>
             </AppBar>
             <Drawer
                 className={ classes.drawer }
                 variant="persistent"
                 anchor="left"
-                open={ open }
+                open={ isLeftDrawerOpen }
                 classes={ {
                     paper: classes.drawerPaper
                 } }
             >
                 <div className={ classes.drawerHeader }>
-                    <IconButton onClick={ handleDrawerClose }>
+                    <IconButton onClick={ toggleLeftDrawer }>
                         { theme.direction === "ltr" ? <ChevronLeftIcon/> : <ChevronRightIcon/> }
                     </IconButton>
                 </div>
                 <Divider/>
                 <List>
                     <li>
-                    <ListItem button onClick={ () => {
-                        const rid = uuid();
-                        actions.createReport({}, rid);
-                        window.setTimeout(()=> history.push(`reports/${rid}`), 250)
-                    } }>
-                        <ListItemIcon><AddCircleOutline/></ListItemIcon>
-                        <ListItemText primary={ "New Report" }/>
-                    </ListItem>
-                </li>
+                        <ListItem button onClick={ () => {
+                            const rid = uuid();
+                            actions.createReport({}, rid);
+                            window.setTimeout(() => history.push(`reports/${ rid }`), 250);
+                        } }>
+                            <ListItemIcon><AddCircleOutline/></ListItemIcon>
+                            <ListItemText primary={ "New Report" }/>
+                        </ListItem>
+                    </li>
                     { reportsMenu.map((item) => (
                         <ListItemLink key={ item.key } { ...item } />
                     )) }
@@ -198,9 +252,28 @@ const Layout = ( { children, actions }: PropsType) => {
                     )) }
                 </List>
             </Drawer>
+            <Drawer
+                className={ classes.drawer }
+                variant="persistent"
+                anchor="right"
+                open={ isRightDrawerOpen }
+                classes={ {
+                    paper: classes.drawerPaper
+                } }
+            >
+                <div className={ classes.rightDrawerHeader }>
+                    <IconButton onClick={ toggleRightDrawer }>
+                        { theme.direction === "rtl" ? <ChevronLeftIcon/> : <ChevronRightIcon/> }
+                    </IconButton>
+                </div>
+                <Divider/>
+                <MiniSearch/>
+            </Drawer>
             <main
                 className={ clsx(classes.content, {
-                    [classes.contentShift]: open
+                    [classes.contentShiftToRight]: isLeftDrawerOpen && !isRightDrawerOpen,
+                    [classes.contentShiftToLeft]: !isLeftDrawerOpen && isRightDrawerOpen,
+                    [classes.contentShiftToCenter]: isLeftDrawerOpen && isRightDrawerOpen
                 }) }
             >
                 <div className={ classes.drawerHeader }/>
