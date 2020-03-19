@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useEffect } from "react";
+import React  from "react";
 import "./report-details-screen.css";
 import { bindActionCreators } from "redux";
 import * as reportActions from "../../action-creators/report-action-creators";
@@ -11,13 +11,10 @@ import * as R from "ramda";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import type Report from "../../models/report";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -237,7 +234,6 @@ const Screen = ({ actions, report, reportId, reportExists }: PropsType): React$E
                     </Grid>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
-
             </div>
         );
 };

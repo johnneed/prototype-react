@@ -137,7 +137,7 @@ export const searchResults3 = {
         licensePlateCountry: "US",
         vin: "JN1CV6EK6EM113059"
     }],
-    subject: [
+    subjects: [
         {
             firstName: "Elijah",
             lastName: "Clark",

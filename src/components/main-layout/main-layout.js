@@ -26,9 +26,13 @@ import ListItemLink from "../list-item-link";
 import type User from "../../models/user";
 import { bindActionCreators } from "redux";
 import * as reportActions from "../../action-creators/report-action-creators";
+import * as searchActions from "../../action-creators/search-results-action-creators";
+import * as searchQueryActions from "../../action-creators/search-query-action-creators"
 import { useHistory } from "react-router-dom";
 import uuid from "uuid";
 import { connect } from "react-redux";
+import MiniSearch from "../mini-search";
+import { updateSubjectQuery } from "../../action-creators/search-query-action-creators";
 
 const drawerWidth = 240;
 
@@ -74,6 +78,9 @@ const useStyles = makeStyles(theme => ({
     hide: {
         display: "none"
     },
+    fade: {
+        visibility: "hidden"
+    },
     drawer: {
         width: drawerWidth,
         flexShrink: 0
@@ -117,7 +124,7 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen
         }),
-        marginRight: drawerWidth,
+        marginRight: drawerWidth
     },
     contentShiftToCenter: {
         transition: theme.transitions.create("margin", {
@@ -125,20 +132,20 @@ const useStyles = makeStyles(theme => ({
             duration: theme.transitions.duration.enteringScreen
         }),
         marginLeft: -drawerWidth,
-        marginRight: drawerWidth,
+        marginRight: drawerWidth
     },
     title: {
         flexGrow: 1
     }
 }));
-type PropsType = { children: React$Component<any> };
+type PropsType = { children: React$Component<any>, actions: Object, user: User, searchResults: Object, searchError: string, query: Object };
 
-const Layout = ({ children, actions }: PropsType) => {
+const Layout = ({ children, actions, user, query, searchResults, searchError }: PropsType) => {
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
     const [isLeftDrawerOpen, setIsLeftDrawerOpen] = React.useState(false);
-    const [isRightDrawerOpen, setIsRightDrawerOpen] = React.useState(true);
+    const [isRightDrawerOpen, setIsRightDrawerOpen] = React.useState(false);
     const toggleLeftDrawer = () => {
         setIsLeftDrawerOpen(!isLeftDrawerOpen);
     };
@@ -206,7 +213,7 @@ const Layout = ({ children, actions }: PropsType) => {
                         aria-label="open search"
                         onClick={ toggleRightDrawer }
                         edge="end"
-                        className={ isRightDrawerOpen && classes.hide }
+                        className={ isRightDrawerOpen && classes.fade }
                     >
                         <SearchIcon/>
                     </IconButton>
@@ -267,7 +274,17 @@ const Layout = ({ children, actions }: PropsType) => {
                     </IconButton>
                 </div>
                 <Divider/>
-                <MiniSearch/>
+                <MiniSearch
+                    query={ query }
+                    searchResults={ searchResults }
+                    onUpdateSubjectQuery={actions.updateSubjectQuery}
+                    onUpdateVehicleQuery={actions.updateVehicleQuery}
+                    error={ searchError }
+                    onSearch={actions.fetchSearchResults}
+                    onClearSubjectQuery={actions.clearSubjectQuery}
+                    onClearVehicleQuery={actions.clearVehicleQuery}
+
+                />
             </Drawer>
             <main
                 className={ clsx(classes.content, {
@@ -286,11 +303,14 @@ const Layout = ({ children, actions }: PropsType) => {
 
 const mapStateToProps = (state: Object): Object => {
     const user: User = state.session.user;
-    return ({ user });
+    const query = state.searchQuery;
+    const searchResults = state.searchResults.data;
+    const searchError = state.searchResults.error;
+    return ({ user, query, searchResults, searchError });
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<Object>): Object => ({
-    actions: bindActionCreators(reportActions, dispatch)
+    actions: bindActionCreators({...reportActions, ...searchActions, ...searchQueryActions}, dispatch)
 });
 
 export const MainLayout = connect(mapStateToProps, mapDispatchToProps)(Layout);

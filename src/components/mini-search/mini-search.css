@@ -1,1 +1,42 @@
-.mini-search {}
+.mini-search {
+    width: 100%;
+}
+.mini-search_tab-panel{
+    height: calc(100vh - 137px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+}
+
+.mini-search_tab-panel-footer{
+    text-align: center;
+    order: 1;
+    flex: 0 0 50px;
+    align-self: stretch;}
+
+.mini-search_tab-panel-footer > *{
+    margin: 0 1rem;
+}
+
+.mini-search_tab-panel-content{
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+}
+
+.mini-search_tab {
+    max-width: 118px;
+    min-width: 118px;
+}
+
+@media (min-width: 600px) {
+    .MuiTab-root.mini-search_tab {
+        max-width: 120px;
+        min-width: 120px;
+        width: 120px;
+    }
+}

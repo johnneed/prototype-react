@@ -1,19 +1,24 @@
 // @flow
 
-import User from "../models/report";
-import Rental from "../models/user";
+import User from "../models/user";
+import ReportSubject from "../models/report-subject";
+import ReportVehicle from "../models/report-vehicle";
 
-const firstRental = Rental.create();
 
 const initialState = {
     network: { isOffline: true },
     reports: { data: {}, error: null, selected: null },
     searchResults: { data: [], error: null, selected: null },
+    searchQuery: {
+        vehicle: ReportVehicle.create(),
+        subject: ReportSubject.create(),
+        error: null
+    },
     session: {
         userIsLoggedIn: false,
         isInitialized: false,
-        user:  User.create()
-    },
+        user: User.create()
+    }
 };
 
 

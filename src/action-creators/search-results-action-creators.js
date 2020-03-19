@@ -2,7 +2,9 @@
 
 import * as actionTypes from "../constants/action-types";
 import Report from "../models/report";
-import * as api from "../data-sources/search-api-1";
+import * as api1 from "../data-sources/search-api-1";
+import * as api2 from "../data-sources/search-api-2";
+import * as api3 from "../data-sources/search-api-3";
 
 
 /** EXAMPLE ACTIONS
@@ -49,13 +51,15 @@ export const selectSearchResult = (searchResultId): ActionType => ({
     payload: searchResultId
 });
 
-export const fetchSearchResults = (term): ThunkType => {
+export const fetchSearchResults = (query): ThunkType => {
     function thunk(dispatch: Dispatch<ActionType>) {
-        api.search(term)
+        Promise.all([api1.search(query), api2.search(query), api3.search(query)])
             .then((response: mixed) => {
-                dispatch({ type: actionTypes.FETCH_SEARCH_RESULTS_SUCCESS, payload: { data: response } });
+                const data = response.map((r, index) => ({source: `Search Provider ${index}`, response: r}));
+                dispatch({ type: actionTypes.FETCH_SEARCH_RESULTS_SUCCESS, payload: {data} });
             })
             .catch((error: Error) => {
+                debugger;
                 dispatch({ type: actionTypes.FETCH_SEARCH_RESULTS_FAIL, payload: { error } });
             });
     }

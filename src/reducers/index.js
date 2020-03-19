@@ -2,12 +2,14 @@
 import { combineReducers } from "redux";
 import { reportsReducer as reports } from "./reports-reducer";
 import { sessionReducer as session } from "./session-reducer";
-import {searchReducer as searchResults} from "./search-reducer";
+import { searchResultsReducer as searchResults } from "./search-results-reducer";
+import { searchQueryReducer as searchQuery } from "./search-query-reducer";
 
 const rootReducer = combineReducers<any, any>({
     session,
     reports,
-    searchResults
+    searchResults,
+    searchQuery
 });
 
 export default rootReducer;

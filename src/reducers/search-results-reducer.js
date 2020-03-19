@@ -5,7 +5,7 @@ import Report from "../models/report";
 import * as R from "ramda";
 
 
-export const searchReducer = R.cond([
+export const searchResultsReducer = R.cond([
     [
         (state, action) => (action.type === types.FETCH_SEARCH_RESULTS_SUCCESS),
         (state, action) => {
