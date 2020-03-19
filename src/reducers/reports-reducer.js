@@ -83,7 +83,7 @@ export const reportsReducer = R.cond([
     ],
     [
         (state, action) => (action.type === types.SELECT_REPORT),
-        (state, action) => ({ ...state, selectedReport: action.payload })
+        (state, action) => ({ ...state, selected: action.payload })
     ],
     [
         (state, action) => (action.type === types.RESET),

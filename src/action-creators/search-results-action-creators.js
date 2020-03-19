@@ -55,7 +55,7 @@ export const fetchSearchResults = (query): ThunkType => {
     function thunk(dispatch: Dispatch<ActionType>) {
         Promise.all([api1.search(query), api2.search(query), api3.search(query)])
             .then((response: mixed) => {
-                const data = response.map((r, index) => ({source: `Search Provider ${index}`, response: r}));
+                const data = response.map((r, index) => ({source: `Search Provider ${index}`, ...r}));
                 dispatch({ type: actionTypes.FETCH_SEARCH_RESULTS_SUCCESS, payload: {data} });
             })
             .catch((error: Error) => {

@@ -1,6 +1,6 @@
 // @flow
 
-import React  from "react";
+import React, {useEffect}  from "react";
 import "./report-details-screen.css";
 import { bindActionCreators } from "redux";
 import * as reportActions from "../../action-creators/report-action-creators";
@@ -47,6 +47,9 @@ const Screen = ({ actions, report, reportId, reportExists }: PropsType): React$E
     const updateVehicle = R.curry((key, event) => {
         actions.updateReport(reportId, { vehicle: { ...report.vehicle, [key]: event.target.value } });
     });
+
+    useEffect(()=>{actions.selectReport(reportId)}, reportId);
+
     return !reportExists
         ? <h1>Report not found</h1>
         : (

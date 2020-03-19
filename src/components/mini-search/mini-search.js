@@ -29,7 +29,9 @@ type PropsType = {
     query: Object,
     searchResults: ?Array<Object>,
     searchError: ?string, onUpdateVehicleQuery: Object => void,
-    onUpdateSubjectQuery: Object => void
+    onUpdateSubjectQuery: Object => void,
+    copySubjectToReport: (string, Object) => void,
+    copyVehicleToReport: (string, Object) => void
 };
 
 type TabPanelTypes = { children: React$Element<any>, index: number, value: any };
@@ -54,7 +56,7 @@ const TabPanel = (props: TabPanelTypes) => {
             hidden={ value !== index }
             id={ `search-tab-panel-${ index }` }
             aria-labelledby={ `search-tab-${ index }` }
-            style={{padding: 0}}
+            style={ { padding: 0 } }
             { ...other }
         >
             { value === index && <div>{ children }</div> }
@@ -70,14 +72,13 @@ function a11yProps(index: number) {
 }
 
 
-export const MiniSearch = ({ query, searchResults, searchError, onSearch, onUpdateSubjectQuery, onUpdateVehicleQuery, onClearVehicleQuery, onClearSubjectQuery }: PropsType): React$Element<any> => {
+export const MiniSearch = ({ query, selectedReportId, searchResults, searchError, onSearch, onUpdateSubjectQuery, onUpdateVehicleQuery, onClearVehicleQuery, onClearSubjectQuery, copySubjectToReport, copyVehicleToReport }: PropsType): React$Element<any> => {
     const [showVehicleResults, setShowVehicleResults] = useState(false);
     const [showSubjectResults, setShowSubjectResults] = useState(false);
     const [isSearchingVehicles, setIsSearchingVehicles] = useState(false);
     const [isSearchingSubjects, setIsSearchingSubjects] = useState(false);
     const [value, setValue] = useState(0);
     const classes = useStyles();
-
     const handleChange = () => {
         setValue(value === 0 ? 1 : 0);
     };
@@ -110,7 +111,7 @@ export const MiniSearch = ({ query, searchResults, searchError, onSearch, onUpda
             setShowSubjectResults(false);
         }
     };
-    // debugger;
+
     return (
         <div className={ "mini-search" }>
             <Tabs value={ value } onChange={ handleChange } aria-label="search tabs">
@@ -147,7 +148,9 @@ export const MiniSearch = ({ query, searchResults, searchError, onSearch, onUpda
                                                         </ExpansionPanelSummary>
                                                         <ExpansionPanelDetails>
                                                             <SubjectList
-                                                                searchResults={ (result.response.subjects || []).map(s => s.result) }/>
+                                                                reportId = {selectedReportId}
+                                                                copyToReport={copySubjectToReport}
+                                                                searchResults={ (result.subjects || []).map(s => s.result) }/>
                                                         </ExpansionPanelDetails>
                                                     </ExpansionPanel>
                                                 ))
@@ -223,7 +226,9 @@ export const MiniSearch = ({ query, searchResults, searchError, onSearch, onUpda
                                                     </ExpansionPanelSummary>
                                                     <ExpansionPanelDetails>
                                                         <VehicleList
-                                                            vehicles={ (result.response.vehicles || []).map(v => v.result) }/>
+                                                            reportId = {selectedReportId}
+                                                            copyToReport={copyVehicleToReport}
+                                                            vehicles={ (result.vehicles || []).map(v => v.result) }/>
                                                     </ExpansionPanelDetails>
                                                 </ExpansionPanel>
                                             ))

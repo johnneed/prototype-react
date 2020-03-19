@@ -83,7 +83,7 @@ export const saveReport = (report): ThunkType => {
 
 export const fetchReports = (searchTerm): ThunkType => {
     function thunk(dispatch: Dispatch<ActionType>) {
-        api.fetchReports({pin:searchTerm})
+        api.fetchReports({ pin: searchTerm })
             .then((response: mixed) => {
                 const reports = R.mapObjIndexed((report, id) => Report.create(report, id), response);
                 dispatch({ type: actionTypes.FETCH_REPORTS_SUCCESS, payload: { data: reports } });
@@ -96,3 +96,14 @@ export const fetchReports = (searchTerm): ThunkType => {
     thunk.interceptOnOffline = false;
     return thunk;
 };
+
+
+export const copySubjectToReport = (id: string, subject): ActionType => ({
+    type: actionTypes.UPDATE_REPORT,
+    payload: { id, snippet: { subject } }
+});
+
+export const copyVehicleToReport = (id: string, vehicle): ActionType => ({
+    type: actionTypes.UPDATE_REPORT,
+    payload: { id, snippet: { vehicle } }
+});

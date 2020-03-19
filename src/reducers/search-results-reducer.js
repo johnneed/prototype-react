@@ -1,7 +1,6 @@
 // @flow
 import * as types from "../constants/action-types";
 import initialState from "./initial-state";
-import Report from "../models/report";
 import * as R from "ramda";
 
 
@@ -27,29 +26,11 @@ export const searchResultsReducer = R.cond([
         }
     ],
     [
-        (state, action) => (action.type === types.CREATE_REPORT_FROM_SEARCH_RESULT),
-        (state, action) => {
-            return ({
-                ...state,
-                selected: action.payload.id,
-                data: {
-                    ...state.data,
-                    [action.payload.id]: action.payload
-                },
-                error: null
-            });
-        }
-    ],
-    [
-        (state, action) => (action.type === types.SELECT_SEARCH_RESULT),
-        (state, action) => ({ ...state, selectedReport: action.payload })
-    ],
-    [
         (state, action) => (action.type === types.RESET),
-        () => initialState.reports
+        () => initialState.searchResults
     ],
     [
         R.T,
-        state => (state || initialState.reports)
+        state => (state || initialState.searchResults)
     ]
 ]);
