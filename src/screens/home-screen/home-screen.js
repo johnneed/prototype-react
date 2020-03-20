@@ -239,7 +239,8 @@ const tileData = [
         component: (<h1 style={ {
             textAlign: "center", position: "relative", margin: 0, fontSize: "3rem",
             top: "50%",
-            transform: "translateY(-50%)"
+            transform: "translateY(-50%)",
+            textShadow: "2px 3px 7px rgba(0,0,0,0.3)"
         } }>120</h1>),
         title: "Calls Today",
         cols: 1
@@ -265,7 +266,7 @@ const Screen = (): React$Element<any> => {
     return (
         <div className={ "home" }>
             <div className={ classes.root }>
-                <GridList cellHeight={ 300 } className={ classes.gridList } cols={ 3 }>
+                <GridList cellHeight={ 340 } className={ classes.gridList } cols={ 3 }>
                     { tileData.map(tile => (
                         <GridListTile key={ tile.id } cols={ tile.cols || 1 }>
                             <Typography className={ classes.title }>{ tile.title }</Typography>
