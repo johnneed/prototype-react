@@ -9,7 +9,7 @@ import { GridList, GridListTile } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { ResponsiveAreaBump } from "@nivo/bump";
 import { ResponsiveNetwork } from "@nivo/network";
-import Graph1 from "../../components/graph1";
+import Graph3 from "../../components/graph3";
 import Graph2 from "../../components/graph2";
 
 import type Report from "../../models/report";
@@ -232,17 +232,10 @@ const tileData = [
         id: 1,
         component: (<MyResponsiveAreaBump data={ bumpData }/>),
         title: "Trends",
-        cols: 3
-    },
-    {
-        id: 2,
-        component: (<Graph2/>),
-        title: "Food",
         cols: 2
     },
-    ,
     {
-        id: 2,
+        id: 3,
         component: (<h1 style={ {
             textAlign: "center", position: "relative", margin: 0, fontSize: "3rem",
             top: "50%",
@@ -250,6 +243,19 @@ const tileData = [
         } }>120</h1>),
         title: "Calls Today",
         cols: 1
+    },
+    {
+        id: 2,
+        component: (<Graph2/>),
+        title: "Food",
+        cols: 1
+    },
+
+    {
+        id: 4,
+        component: (<Graph3/>),
+        title: "Stuff",
+        cols: 2
     }
 ];
 
