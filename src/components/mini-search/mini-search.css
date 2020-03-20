@@ -15,8 +15,11 @@
 .mini-search_tab-panel-footer{
     text-align: center;
     order: 1;
-    flex: 0 0 50px;
-    align-self: stretch;}
+    flex: 0 0 55px;
+    padding-top: 9px;
+    align-self: stretch;
+    background: #F4F4F4;
+}
 
 .mini-search_tab-panel-footer > *{
     margin: 0 1rem;
@@ -26,11 +29,17 @@
     order: 0;
     flex: 1 1 auto;
     align-self: stretch;
+    overflow: auto;
 }
 
 .mini-search_tab {
     max-width: 118px;
     min-width: 118px;
+}
+
+.mini-search_results-container{
+    height: 100%;
+    overflow-y: auto;
 }
 
 @media (min-width: 600px) {

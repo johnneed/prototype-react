@@ -212,7 +212,7 @@ export const MiniSearch = ({ query, selectedReportId, searchResults, searchError
                     <div className={ "mini-search_tab-panel-content" }>
                         {
                             showVehicleResults
-                                ? (<div>
+                                ? (<div style={"mini-search_results-container"}>
                                     {
                                         searchResults && searchResults.length > 0
                                             ? searchResults.map(result => (
