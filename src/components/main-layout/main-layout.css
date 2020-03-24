@@ -1,1 +1,3 @@
-.main-layout {}
+.main-layout {
+    display: flex;
+}

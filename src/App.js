@@ -3,7 +3,6 @@ import HomeScreen from "./screens/home-screen";
 import ReportDetailsScreen from "./screens/report-details-screen";
 import NewReportScreen from "./screens/new-report-screen";
 import ReportsScreen from "./screens/reports-screen";
-import SearchScreen from "./screens/search-screen";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/es/integration/react";
 import Splash from "./components/splash";
@@ -37,9 +36,6 @@ function App() {
                                            }/>
                                     <Route path="/reports" exact={ true }>
                                         <ReportsScreen/>
-                                    </Route>
-                                    <Route path="/search">
-                                        <SearchScreen/>
                                     </Route>
                                     <Route path="/">
                                         <HomeScreen/>

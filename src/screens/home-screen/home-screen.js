@@ -248,7 +248,7 @@ const tileData = [
     {
         id: 2,
         component: (<Graph2/>),
-        title: "Food",
+        title: "Lunch",
         cols: 1
     },
 

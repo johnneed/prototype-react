@@ -31,11 +31,8 @@ import * as searchQueryActions from "../../action-creators/search-query-action-c
 import uuid from "uuid";
 import { connect } from "react-redux";
 import MiniSearch from "../mini-search";
-import { updateSubjectQuery } from "../../action-creators/search-query-action-creators";
-import { copySubjectToReport } from "../../action-creators/report-action-creators";
-import * as R from "ramda";
-import {  useHistory } from 'react-router-dom'
-
+import { useHistory } from "react-router-dom";
+import "./main-layout.css";
 
 const drawerWidth = 240;
 
@@ -170,13 +167,6 @@ const Layout = ({ children, actions, user, query, searchResults, searchError, se
         },
         {
             order: 0,
-            key: "search",
-            text: "Search",
-            icon: (<SearchIcon/>),
-            to: "/search"
-        },
-        {
-            order: 0,
             key: "dashboard",
             text: "Dashboard",
             icon: (<DashboardIcon/>),
@@ -190,7 +180,7 @@ const Layout = ({ children, actions, user, query, searchResults, searchError, se
 
 
     return (
-        <div className={ classes.root }>
+        <div className={ "main-layout" }>
             <CssBaseline/>
             <AppBar
                 position="fixed"
@@ -206,7 +196,7 @@ const Layout = ({ children, actions, user, query, searchResults, searchError, se
                         aria-label="open navigation"
                         onClick={ toggleLeftDrawer }
                         edge="start"
-                        className={ clsx(classes.menuButton, isLeftDrawerOpen && classes.hide) }
+                        className={ clsx(classes.menuButton, { [classes.hide]: isLeftDrawerOpen }) }
                     >
                         <MenuIcon/>
                     </IconButton>
@@ -218,7 +208,7 @@ const Layout = ({ children, actions, user, query, searchResults, searchError, se
                         aria-label="open search"
                         onClick={ toggleRightDrawer }
                         edge="end"
-                        className={ isRightDrawerOpen && classes.fade }
+                        className={ clsx({ [classes.fade]: isRightDrawerOpen }) }
                     >
                         <SearchIcon/>
                     </IconButton>
@@ -300,7 +290,7 @@ const Layout = ({ children, actions, user, query, searchResults, searchError, se
                     [classes.contentShiftToCenter]: isLeftDrawerOpen && isRightDrawerOpen
                 }) }
             >
-                <div className={ classes.drawerHeader }/>
+                <div className={ clsx(classes.drawerHeader) }/>
                 { children }
             </main>
         </div>

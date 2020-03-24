@@ -6,13 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import SearchResults from "../search-results";
 import SubjectQueryBuilder from "../subject-query-builder";
 import VehicleQueryBuilder from "../vehicle-query-builder";
 import FaceIcon from "@material-ui/icons/Face";
 import DirectionsCarIcon from "@material-ui/icons/DirectionsCar";
-import Button from "@material-ui/core/Button";
 import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
 import Fab from "@material-ui/core/Fab";
@@ -143,13 +140,14 @@ export const MiniSearch = ({ query, selectedReportId, searchResults, searchError
                                                             aria-controls="panel1a-content"
                                                             id="panel1a-header"
                                                         >
-                                                            <Typography
-                                                                className={ classes.heading }>{ result.source }</Typography>
+                                                            <Typography className={ classes.heading }>
+                                                                { `${ result.subjects.length } : ${ result.source }` }
+                                                            </Typography>
                                                         </ExpansionPanelSummary>
                                                         <ExpansionPanelDetails>
                                                             <SubjectList
-                                                                reportId = {selectedReportId}
-                                                                copyToReport={copySubjectToReport}
+                                                                reportId={ selectedReportId }
+                                                                copyToReport={ copySubjectToReport }
                                                                 searchResults={ (result.subjects || []).map(s => s.result) }/>
                                                         </ExpansionPanelDetails>
                                                     </ExpansionPanel>
@@ -212,7 +210,7 @@ export const MiniSearch = ({ query, selectedReportId, searchResults, searchError
                     <div className={ "mini-search_tab-panel-content" }>
                         {
                             showVehicleResults
-                                ? (<div style={"mini-search_results-container"}>
+                                ? (<div className={ "mini-search_results-container" }>
                                     {
                                         searchResults && searchResults.length > 0
                                             ? searchResults.map(result => (
@@ -222,12 +220,14 @@ export const MiniSearch = ({ query, selectedReportId, searchResults, searchError
                                                         aria-controls="panel1a-content"
                                                         id="panel1a-header"
                                                     >
-                                                        <Typography className={ classes.heading }>Expansion Panel 1</Typography>
+                                                        <Typography className={ classes.heading }>
+                                                            { `${ result.vehicles.length } : ${ result.source }` }
+                                                        </Typography>
                                                     </ExpansionPanelSummary>
                                                     <ExpansionPanelDetails>
                                                         <VehicleList
-                                                            reportId = {selectedReportId}
-                                                            copyToReport={copyVehicleToReport}
+                                                            reportId={ selectedReportId }
+                                                            copyToReport={ copyVehicleToReport }
                                                             vehicles={ (result.vehicles || []).map(v => v.result) }/>
                                                     </ExpansionPanelDetails>
                                                 </ExpansionPanel>
